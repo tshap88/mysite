@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+    {% block title %}vm4game{% endblock %}
+    {% block nav %}
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/support">Support</a></li>
+        <li><a href="/about_us">About Us</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+    {% endblock %}
+    {% block content %}
+        {% for news1_mn in news_mn %}
+                <div class="article">
+                  <h2><span>{{ news1_mn }}</span></h2>
+                  <div class="clr"></div>
+                  <script type="text/javascript">
+                  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                  var disqus_shortname = 'vm4game'; // required: replace example with your forum shortname
+                  var disqus_identifier = '/news/{{ news1_mn.slug }}';
+                  var disqus_url = 'http://127.0.0.1:8000/news/{{ news1_mn.slug }}';
+                  /* * * DON'T EDIT BELOW THIS LINE * * */
+                  (function () {
+                     var s = document.createElement('script'); s.async = true;
+                     s.type = 'text/javascript';
+                     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+                     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+                  }());
+                  </script>
+                  <p class="post-data"> <a data-disqus-identifier = "/news/{{ news1_mn.slug }}" href="/news/{{ news1_mn.slug }}#disqus_thread" class="com"></a><span class="date">{{ news1_mn.date_pub }}</span> &nbsp;|&nbsp; Posted by {{ news1_mn.author }} &nbsp;|&nbsp; Filed under <a href="#">templates</a>, <a href="#">internet</a></p>
+                  {% if news1_mn.img_file %}
+                      <img src="{{ news1_mn.img_file.url }}"  width="138" height="138" alt="" class="fl" />
+                  {% else %}
+                  {% endif %}
+                  <p>{{ news1_mn.contents|safe|truncatewords:"35" }}</p>
+                  <p class="spec"><a href="/news/{{ news1_mn.slug }}/" class="rm">Read more</a></p>
+                  {% if news1_mn.img_file %}
+                      <p></p>
+                      <p></p>
+                      <p></p>
+                      <p></p>
+                      <p></p>
+                      <div class="article2"></div>
+                  {% else %}
+                      <p></p>
+                      <p></p>
+                      <div class="article2"></div>
+                  {% endif %}
+                </div>
+            {% endfor %}
+    {% endblock %}
+    {% block sidebar %}
+        <h2 class="star"><span>Sponsors</span></h2>
+            <div class="clr"></div>
+            <ul class="ex_menu">
+              <li class="active"><a href="#">Lorem ipsum dolor</a><br />
+                Donec libero. Suspendisse bibendum 6 7 8 9 0 Donec libero. Suspendisse bibendum</li>
+            </ul>
+    {% endblock %}

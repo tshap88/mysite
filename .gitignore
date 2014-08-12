@@ -1,0 +1,8 @@
+.idea/workspace.xml
+.idea/
+*.xml
+*.pyc
+mysite/settings.py
+sites/media/
+properties.txt
+my.cnf
