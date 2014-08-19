@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
 from news.models import News
 
 def Last5News(request):
@@ -16,3 +16,15 @@ def SingleNews(request, ar_slug):
     context = {'news': news}
     return render(request, 'news/singlenews.html',context)
 
+
+def custom_400(request):
+    return render_to_response('400.html')
+
+def custom_403(request):
+    return render_to_response('403.html')
+
+def custom_404(request):
+    return render_to_response('404.html')
+
+def custom_500(request):
+    return render_to_response('500.html')
