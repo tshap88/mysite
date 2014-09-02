@@ -30,7 +30,7 @@
                       <img src="{{ news1_mn.img_file.url }}"  width="138" height="138" alt="" class="fl" />
                   {% else %}
                   {% endif %}
-                  <p>{{ news1_mn.contents|safe|truncatewords:"35" }}</p>
+                  <p class="cont">{{ news1_mn.contents|safe|truncatewords:"35" }}</p>
                   <p class="spec"><a href="/news/{{ news1_mn.slug }}/" class="rm">Read more</a></p>
                   {% if news1_mn.img_file %}
                       <p></p>
@@ -47,11 +47,4 @@
                 </div>
             {% endfor %}
     {% endblock %}
-    {% block sidebar %}
-        <h2 class="star"><span>Sponsors</span></h2>
-            <div class="clr"></div>
-            <ul class="ex_menu">
-              <li class="active"><a href="#">Lorem ipsum dolor</a><br />
-                Donec libero. Suspendisse bibendum 6 7 8 9 0 Donec libero. Suspendisse bibendum</li>
-            </ul>
-    {% endblock %}
+    
