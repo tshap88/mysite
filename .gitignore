@@ -3,6 +3,6 @@
 *.xml
 *.pyc
 mysite/settings.py
-sites/media/
+sites/
 properties.txt
 my.cnf
