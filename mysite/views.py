@@ -32,12 +32,6 @@ def about(request):
     context = {'news_bar': news_bar}
     return render(request, 'about.html', context)
 
-def blog(request):
-    news = News.objects.all()
-    news_bar = news.order_by('date_pub')#[len(news)-5:len(news):-1]
-    context = {'news_bar': news_bar}
-    return render(request, 'blog.html', context)
-
 def thanks(request):
     context = {'thanks': thanks}
     return render(request, 'thanks.html', context)

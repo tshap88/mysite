@@ -4,24 +4,45 @@
         <li><a href="/">Home</a></li>
         <li class="active"><a href="/articles">Articles</a></li>
         <li><a href="/about_us">About Us</a></li>
-        <li><a href="/blog">Blog</a></li>
         <li><a href="/contact">Contact Us</a></li>
     {% endblock %}
     {% block content %}
-        <div class="article">
-          <h2><span>Support to</span> Company Name</h2>
-          <div class="clr"></div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Suspendisse nulla ligula, blandit ultricies aliquet ac, lobortis in massa. Nunc dolor sem, tincidunt vitae viverra in, egestas sed lacus.</strong> Etiam in ullamcorper felis. Nulla cursus feugiat leo, ut dictum metus semper a. Vivamus euismod, arcu gravida sollicitudin vestibulum, quam sem tempus quam, quis ullamcorper erat nunc in massa. Donec aliquet ante non diam sollicitudin quis auctor velit sodales. Morbi neque est, posuere at fringilla non, mollis nec nibh. Sed commodo tortor nec sem tincidunt mattis. Nam convallis aliquam nibh eu luctus. Nunc vel tincidunt lacus. Suspendisse sit amet pulvinar ante.</p>
-          <p>Phasellus diam justo, laoreet vel vulputate eu, congue vel est. Maecenas eros libero, sollicitudin a vulputate fermentum, ultrices vel lacus. Nam in metus non augue fermentum consequat ultrices ac enim. Integer aliquam urna non diam aliquam eget hendrerit sem molestie.</p>
-          <p><strong>Lorem ipsum dolor sit amet</strong></p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget bibendum tellus. Nunc vel imperdiet tellus. Mauris ornare aliquam urna, accumsan bibendum eros auctor ac.</p>
-          <ul class="sb_menu">
-            <li><a href="#"><strong>Lorem ipsum</strong></a></li>
-            <li><a href="#"><strong>Lorem ipsum</strong></a></li>
-            <li><a href="#"><strong>Lorem ipsum</strong></a></li>
-            <li><a href="#"><strong>Lorem ipsum</strong></a></li>
-            <li><a href="#"><strong>Lorem ipsum</strong></a></li>
-            <li><a href="#"><strong>Lorem ipsum</strong></a></li>
-          </ul>
-        </div>
+        {% for news1_mn in news_mn %}
+                <div class="article">
+                  <h2><span>{{ news1_mn }}</span></h2>
+                  <div class="clr"></div>
+                  <script type="text/javascript">
+                  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                  var disqus_shortname = 'testtcom'; // required: replace example with your forum shortname
+                  var disqus_identifier = '/news/{{ news1_mn.slug }}';
+                  var disqus_url = 'http://127.0.0.1:8000/news/{{ news1_mn.slug }}';
+                  /* * * DON'T EDIT BELOW THIS LINE * * */
+                  (function () {
+                     var s = document.createElement('script'); s.async = true;
+                     s.type = 'text/javascript';
+                     s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+                     (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+                  }());
+                  </script>
+                  <p class="post-data"> <a href="/news/{{ news1_mn.slug }}#disqus_thread" data-disqus-identifier = "/news/{{ news1_mn.slug }}" class="com"></a><span class="date">{{ news1_mn.date_pub }}</span> &nbsp;|&nbsp; Posted by {{ news1_mn.author }} </p>
+                  {% if news1_mn.img_file %}
+                      <img src="{{ news1_mn.img_file.url }}"  width="138" height="138" alt="" class="fl" />
+                  {% else %}
+                  {% endif %}
+                  <p class="cont">{{ news1_mn.contents|safe|truncatewords:"35" }}</p>
+                  <p class="spec"><a href="/news/{{ news1_mn.slug }}/" class="rm">Read more</a></p>
+                  {% if news1_mn.img_file %}
+                      <p></p>
+                      <p></p>
+                      <p></p>
+                      <p></p>
+                      <p></p>
+                      <div class="article2"></div>
+                  {% else %}
+                      <p></p>
+                      <p></p>
+                      <div class="article2"></div>
+                  {% endif %}
+                </div>
+            {% endfor %}
     {% endblock %}
