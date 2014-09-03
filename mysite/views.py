@@ -20,11 +20,11 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-def support(request):
+def articles(request):
     news = News.objects.all()
     news_bar = news.order_by('date_pub')#[len(news)-5:len(news):-1]
     context = {'news_bar': news_bar}
-    return render(request, 'support.html', context)
+    return render(request, 'articles.html', context)
 
 def about(request):
     news = News.objects.all()
