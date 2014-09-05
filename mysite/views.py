@@ -14,16 +14,16 @@ from news.models import News
 def index(request):
     news = News.objects.all()
     news_bar = News.objects.all().order_by('date_pub')#[len(news)-1:len(news):-1]
-    news_mn = News.objects.all().order_by('-date_pub') #[:len(news):-1]#[::-1] #only today
+    #news_mn = News.objects.all().order_by('-date_pub') #[:len(news):-1]#[::-1] #only today
+    news_mn = News.objects.filter(news_article='news').order_by('-date_pub')
     context = {'news_bar': news_bar,
                 'news_mn': news_mn
     }
     return render(request, 'index.html', context)
 
 def articles(request):
-    news = News.objects.all()
-    news_bar = news.order_by('date_pub')#[len(news)-5:len(news):-1]
-    context = {'news_bar': news_bar}
+    articles = News.objects.filter(news_article='article').order_by('-date_pub')
+    context = {'articles' : articles}
     return render(request, 'articles.html', context)
 
 def about(request):

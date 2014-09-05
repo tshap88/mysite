@@ -9,6 +9,7 @@ from django.dispatch import receiver
 class News(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField('slug')
+    news_article = models.CharField(max_length=50)
     date_pub = models.DateTimeField('date published')
     contents = models.TextField(blank=True)
     author = models.CharField(max_length=200)
