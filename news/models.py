@@ -9,12 +9,11 @@ from django.dispatch import receiver
 class News(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField('slug')
-    news_article = models.CharField(max_length=50)
     date_pub = models.DateTimeField('date published')
     contents = models.TextField(blank=True)
     author = models.CharField(max_length=200)
     link = models.URLField(blank=True)
-    img_file = models.ImageField('file name', upload_to='imgs/', blank=True)
+    img_file = models.ImageField('file name', upload_to='imgs_n/', blank=True)
     img_url = models.URLField(blank=True, null=True)
 
     def __unicode__(self):
@@ -33,7 +32,40 @@ class News(models.Model):
         super(News, self).save(*args, **kwargs)
 
 @receiver(post_delete, sender=News)
-def mews_post_delete_handler(sender, **kwargs):
+def news_post_delete_handler(sender, **kwargs):
         news = kwargs['instance']
         storage, path = news.img_file.storage, news.img_file.path
+        if news.img_file:
+            storage.delete(path)
+
+class Article(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField('slug')
+    date_pub = models.DateTimeField('date published')
+    contents = models.TextField(blank=True)
+    author = models.CharField(max_length=200)
+    link = models.URLField(blank=True)
+    img_file = models.ImageField('file name', upload_to='imgs_a/', blank=True)
+    img_url = models.URLField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.img_url:
+            image_data = urllib2.urlopen(self.img_url, timeout=5)
+            filename = urlparse.urlparse(image_data.geturl()).path.split('/')[-1]
+            self.img_file = filename
+            self.img_file.save(
+                filename,
+                ContentFile(image_data.read()),
+                save=False
+            )
+        super(Article, self).save(*args, **kwargs)
+
+@receiver(post_delete, sender=Article)
+def article_post_delete_handler(sender, **kwargs):
+    if Article.img_file or Article.img_url:
+        article = kwargs['instance']
+        storage, path = article.img_file.storage, article.img_file.path
         storage.delete(path)

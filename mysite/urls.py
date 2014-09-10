@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^contact/$', views.contact, name = 'contact'),
     url(r'^contact/thanks/$', views.thanks, name='thanks'),
     url(r'^news/', include('news.urls', namespace = 'news')),
+    url(r'^articles/', include('news.urls', namespace = 'article')),
 
 )
 #handler404 = 'news.views.custom_404'

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-import datetime
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 
@@ -8,28 +7,22 @@ from django.core.mail import send_mail
 from recaptcha.client import captcha
 from mysite import settings
 from mysite.forms import ContactForm
-from news.models import News
+from news.models import News, Article
 
 
 def index(request):
     news = News.objects.all()
-    news_bar = News.objects.all().order_by('date_pub')#[len(news)-1:len(news):-1]
-    #news_mn = News.objects.all().order_by('-date_pub') #[:len(news):-1]#[::-1] #only today
-    news_mn = News.objects.filter(news_article='news').order_by('-date_pub')
-    context = {'news_bar': news_bar,
-                'news_mn': news_mn
-    }
+    news_mn = news.order_by('-date_pub')
+    context = {'news_mn': news_mn}
     return render(request, 'index.html', context)
 
 def articles(request):
-    articles = News.objects.filter(news_article='article').order_by('-date_pub')
+    articles = Article.objects.all().order_by('-date_pub')
     context = {'articles' : articles}
     return render(request, 'articles.html', context)
 
 def about(request):
-    news = News.objects.all()
-    news_bar = news.order_by('date_pub')#[len(news)-5:len(news):-1]
-    context = {'news_bar': news_bar}
+    context = {'about': about}
     return render(request, 'about.html', context)
 
 def thanks(request):
