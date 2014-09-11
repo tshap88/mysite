@@ -1,16 +1,6 @@
 from django.shortcuts import render, get_object_or_404, render_to_response
 from news.models import News, Article
 
-def Last5News(request):
-    news = News.objects.all().order_by('date_pub')[:5]
-    context = {'news': news}
-    return render(request, 'index.html','articles.html','about.html','contact.html',context)
-
-def NewsAll(request):
-    news = News.objects.all().order_by('-date_pub')
-    context = {'news': news}
-    return render(request, 'news/news.html',context)
-
 def SingleNews(request, news_slug):
     news = get_object_or_404(News, slug = news_slug)
     context = {'news': news}
