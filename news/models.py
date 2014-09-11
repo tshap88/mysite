@@ -31,12 +31,15 @@ class News(models.Model):
             )
         super(News, self).save(*args, **kwargs)
 
-@receiver(post_delete, sender=News)
-def news_post_delete_handler(sender, **kwargs):
-        news = kwargs['instance']
-        storage, path = news.img_file.storage, news.img_file.path
-        if news.img_file:
-            storage.delete(path)
+    def delete(self, using=None):
+        if self.img_file:
+            @receiver(post_delete, sender=News)
+            def news_post_delete_handler(sender, **kwargs):
+                news = kwargs['instance']
+                storage, path = news.img_file.storage, news.img_file.path
+                storage.delete(path)
+
+        super(News, self).delete()
 
 class Article(models.Model):
     name = models.CharField(max_length=200)
@@ -63,9 +66,11 @@ class Article(models.Model):
             )
         super(Article, self).save(*args, **kwargs)
 
-@receiver(post_delete, sender=Article)
-def article_post_delete_handler(sender, **kwargs):
-    if Article.img_file or Article.img_url:
-        article = kwargs['instance']
-        storage, path = article.img_file.storage, article.img_file.path
-        storage.delete(path)
+    def delete(self, using=None):
+        if self.img_file:
+            @receiver(post_delete, sender=Article)
+            def article_post_delete_handler(sender, **kwargs):
+                article = kwargs['instance']
+                storage, path = article.img_file.storage, article.img_file.path
+                storage.delete(path)
+        super(Article, self).delete()
